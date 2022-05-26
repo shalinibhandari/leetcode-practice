@@ -15,11 +15,11 @@ public:
             if(heada!=NULL)
                 heada=heada->next;
             else
-                heada=headA;
+                heada=headB;
             if(headb!=NULL)
                 headb=headb->next;
             else
-                headb=headB;
+                headb=headA;
         }
         return heada;
     }
