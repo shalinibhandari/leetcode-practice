@@ -105,62 +105,59 @@ struct Node
 
 class Solution {
 public:
-void leafboundary(Node*root,vector<int>&ans)
+void left(Node*root,vector<int>&ans)
 {
-    
-       if(root==NULL)  return ;
-       if(root->left==NULL and root->right==NULL) return ;
-       else
-       {ans.push_back(root->data);
-       if(root->left) leafboundary(root->left,ans);
-       else leafboundary(root->right,ans);
-       }
-}
-void leaf(Node*root,vector<int>&ans)
-{
-    if(root==NULL) return ;
-         if(!root->left and !root->right)
-        ans.push_back(root->data);
-        else{
-      leaf(root->left,ans);
-      leaf(root->right,ans);
-        }
-   
-   
-}
-void rightboundary(Node*root,vector<int>&ans)
-{
-
-      
-       if(root==NULL)  return ;
-       if(root->left==NULL and root->right==NULL) return ;
-       else
-       {ans.push_back(root->data);
-       if(root->right) rightboundary(root->right,ans);
-       else rightboundary(root->left,ans);
-       }
-    
-}
-    vector <int> boundary(Node *root)
-    {
-        vector<int>ans;
-        if(root->left==NULL and root->right==NULL)
-        {  
+    while(root)
+    { 
+        if(root->left==NULL and root->right==NULL) 
+        {
             
         }
         else
-            ans.push_back(root->data);
-        leafboundary(root->left,ans);
-        
-        leaf(root,ans);
-        
-        vector<int>t;
-        rightboundary(root->right,t);
-        reverse(t.begin(),t.end());
-        
-        for(auto x:t)
-          ans.push_back(x);
-        return ans;
+        ans.push_back(root->data);
+        if(root->left)
+        root=root->left;
+        else
+        root=root->right;
+    }
+}
+void leaf(Node*root,vector<int>&ans)
+{
+     if(root==NULL) return ;
+     if(root->left==NULL and root->right==NULL)   ans.push_back(root->data);
+     leaf(root->left,ans);
+     leaf(root->right,ans);
+}
+void right(Node*root,vector<int>&ans)
+{
+     while(root)
+    { 
+        if(root->left==NULL and root->right==NULL) 
+        {
+            
+        }
+        else
+        ans.push_back(root->data);
+        if(root->right)
+        root=root->right;
+        else
+        root=root->left;
+    }
+}
+    vector <int> boundary(Node *root)
+    {
+         vector<int>ans;
+         if(root->left!=NULL or root->right!=NULL)  ans.push_back(root->data);
+         left(root->left,ans);
+         leaf(root,ans);
+         vector<int>t;
+         right(root->right,t);
+         reverse(t.begin(),t.end());
+         for(auto x:t)
+         ans.push_back(x);
+         return ans;
+         
+         
     }
 };
 
