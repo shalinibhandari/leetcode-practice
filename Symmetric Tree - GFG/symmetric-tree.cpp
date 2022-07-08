@@ -102,20 +102,22 @@ struct Node {
 class Solution{
     public:
     // return true/false denoting whether the tree is Symmetric or not
-    bool mirror(struct Node*left,struct Node*right)
+    bool call(Node*root1,Node*root2)
     {
-        if(left==NULL || right==NULL)
-          return left==right;
-          if(left->data!=right->data)
-          return false;
-          return mirror(left->left,right->right) and mirror(left->right,right->left);
+        if(root1==NULL and root2==NULL)  return true;
+        if(root1==NULL || root2==NULL)   return false;
+        if(root1->data!=root2->data)     return false;
+        bool b1=call(root1->left,root2->right);
+        bool b2=call(root1->right,root2->left);
+        if(b1&&b2)  return true;
+        else return false;
+        
     }
     bool isSymmetric(struct Node* root)
     {
-	    if(root==NULL)
-	    return true;
-	    
-	    return mirror(root->left,root->right);
+	    if(!root)
+	      return true;
+	      return call(root->left,root->right);
     }
 };
 
