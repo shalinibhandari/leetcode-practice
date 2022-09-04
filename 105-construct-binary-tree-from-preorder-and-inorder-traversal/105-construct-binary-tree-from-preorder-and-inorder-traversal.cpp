@@ -10,34 +10,34 @@
  * };
  */
 class Solution {
+    
 public:
-    TreeNode*build(int pre[],int prestart,int preend,int in[],int instart,int inend,map<int,int>&mp)
+    TreeNode*call(int is,int ie,int in[],int ps,int pe,int pre[],map<int,int>&mp)
     {
-        if(prestart>preend || instart>inend)  return NULL;
-        TreeNode*root=new TreeNode(pre[prestart]);
-        int ind=mp[root->val];
-        int diff=ind-instart;
-        
-        root->left=build(pre,prestart+1,prestart+diff,in,instart,ind-1,mp);
-        root->right=build(pre,prestart+diff+1,preend,in,ind+1,inend,mp);
-         return root;    
+        if(is>ie or ps>pe) return NULL;
+        TreeNode*n=new TreeNode(pre[ps]);
+        int ind=mp[pre[ps]];
+        int diff=ind-is;
+        n->left=call(is,ind-1,in,ps+1,ps+diff,pre,mp);
+        n->right=call(ind+1,ie,in,ps+diff+1,pe,pre,mp);
+        return n;
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-         int n=preorder.size();
-        int pre[n],in[n];
-        for(int i=0;i<n;i++)
-        {
-            pre[i]=preorder[i];
+        int in[inorder.size()];
+        int pre[preorder.size()];
+        for(int i=0;i<inorder.size();i++)
+        { 
             in[i]=inorder[i];
+            pre[i]=preorder[i];
+            
+            
         }
         map<int,int>mp;
-        for(int i=0;i<n;i++)
+        for(int i=0;i<inorder.size();i++)
         {
             mp[in[i]]=i;
         }
-        TreeNode*root=build(pre,0,n-1,in,0,n-1,mp);
-        return root;
+        int n=inorder.size()-1;
+        return call(0,n,in,0,n,pre,mp);
     }
-    
-     
 };
