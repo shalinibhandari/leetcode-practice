@@ -11,20 +11,17 @@
  */
 class Solution {
 public:
-        
-long long prev=-1e10;
-bool isValidBST(TreeNode* root) {
-    
-    if(root==NULL)
-        return true;
-    int x=isValidBST(root->left);
-    if(prev>=root->val)
-    {  
-        return false;
+    long long bound=-1e10;
+    bool call(TreeNode*root)
+    {
+        if(root==NULL) return true;
+        bool l=call(root->left);
+        if(bound>=root->val) return false;
+        bound=root->val;
+        bool r=call(root->right);
+        return l and r;
     }
-     prev=root->val;
-    
-    int y=isValidBST(root->right);
-    return x and y;
+    bool isValidBST(TreeNode* root) {
+        return call(root);
     }
 };
