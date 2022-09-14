@@ -1,41 +1,41 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        vector<string>s1;
-        string ch="";
-        for(int  i=0;i<s.size();i++)
+        string a="";
+        string s1="";
+    
+        reverse(s.begin(),s.end());
+        int c=0,count=0;
+        vector<string>ans;
+        for(int i=0;i<s.size();i++)
         {
             if(s[i]==' ')
-            {  
-                if(ch.size()>0)
-                {
-                    s1.push_back(ch);
-                    ch="";
+            {
+                if(s1.size()>0 )
+                {   reverse(s1.begin(),s1.end());
+                    ans.push_back(s1);
+                    s1="";
                 }
                 
+                    
+            }
+            else if(s[i]!=' ')
+            {
+                s1+=s[i];
                 
             }
-            else
-            {
-                ch+=s[i];
-            }
-               
         }
-        if(ch!=" " and ch.size()>0)
-        s1.push_back(ch);
-        reverse(s1.begin(),s1.end());
-        string ans="";
-        int c=s1.size();
-        int i=0;
-        cout<<s1.size();
-        for(auto x:s1)
-        {       
-            ans+=x;
-            if(i+1!=c)
-            ans+=' ';
-            ++i;
+        if(s1.size()>0)
+        {
+            reverse(s1.begin(),s1.end());
+                    ans.push_back(s1);
         }
-        
-        return ans;
+        for(int i=0;i<ans.size();i++)
+        {
+            a+=ans[i];
+            if(i+1<ans.size())
+                a+=' ';
+        }
+        return a;
     }
 };
