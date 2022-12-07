@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -76,7 +76,7 @@ Node* buildTree(string str) {
 }
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 /* Tree node structure  used in the program
 
 struct Node
@@ -94,28 +94,23 @@ struct Node
 class Solution {
   public:
     // Function to return the diameter of a Binary Tree.
-    pair<int,int>helper(Node*root)
-    {  
-        if(root==NULL)
-        {   pair<int,int>p;
-           p.first=0;
-           p.second=0;
-           return p;
-        }
-        pair<int,int>p1=helper(root->left);
-        pair<int,int>p2=helper(root->right);
-        pair<int,int>p3;
-        p3.first=max(p1.first,p2.first)+1;
-        p3.second=max(p1.first+p2.first+1,max(p1.second,p2.second));
-        return p3;
+    int call(Node*root,int &maxi)
+    {
+        if(root==NULL) return 0;
+        int ls=call(root->left,maxi);
+        int rs=call(root->right,maxi);
+        maxi=max(maxi,ls+rs);
+        return max(ls,rs)+1;
+        
     }
     int diameter(Node* root) {
-        pair<int,int>p=helper(root);
-        return p.second;
+        int mini=0;
+        call(root,mini);
+        return mini+1;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 /* Driver program to test size function*/
 int main() {
@@ -130,4 +125,5 @@ int main() {
     }
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
